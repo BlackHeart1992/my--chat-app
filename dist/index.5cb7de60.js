@@ -22925,116 +22925,7 @@ $RefreshReg$(_c, "App");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-runtime":"8xIwr","react":"6TuXu","./signup":"4YqKZ","../utils/supabase":"1QIpV","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"5V79J","./chat":"dfZxi"}],"4YqKZ":[function(require,module,exports) {
-var $parcel$ReactRefreshHelpers$10a7 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
-var prevRefreshReg = window.$RefreshReg$;
-var prevRefreshSig = window.$RefreshSig$;
-$parcel$ReactRefreshHelpers$10a7.prelude(module);
-
-try {
-var _jsxRuntime = require("react/jsx-runtime");
-var _s = $RefreshSig$();
-const { useState  } = require("react");
-const supabase = require("../utils/supabase");
-function SignUp() {
-    _s();
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    function handleEmailChange(event) {
-        setEmail(event.target.value);
-    }
-    function handlePasswordChange(event) {
-        setPassword(event.target.value);
-    }
-    function handleSignIn(event) {
-        event.preventDefault();
-        supabase.auth.signIn({
-            email: email,
-            password: password
-        }).then(function(data) {
-        // console.log(data);
-        });
-    }
-    function handleSignUp(event) {
-        event.preventDefault();
-        supabase.auth.signUp({
-            email: email,
-            password: password
-        }).then(function(data) {
-            console.log(data);
-        });
-    }
-    return(/*#__PURE__*/ _jsxRuntime.jsx("div", {
-        __source: {
-            fileName: "src/components/signup.js",
-            lineNumber: 33
-        },
-        __self: this,
-        children: /*#__PURE__*/ _jsxRuntime.jsxs("form", {
-            __source: {
-                fileName: "src/components/signup.js",
-                lineNumber: 34
-            },
-            __self: this,
-            children: [
-                /*#__PURE__*/ _jsxRuntime.jsx("input", {
-                    type: "text",
-                    placeholder: "Email",
-                    value: email,
-                    onChange: handleEmailChange,
-                    __source: {
-                        fileName: "src/components/signup.js",
-                        lineNumber: 35
-                    },
-                    __self: this
-                }),
-                /*#__PURE__*/ _jsxRuntime.jsx("input", {
-                    type: "password",
-                    placeholder: "Password",
-                    value: password,
-                    onChange: handlePasswordChange,
-                    __source: {
-                        fileName: "src/components/signup.js",
-                        lineNumber: 41
-                    },
-                    __self: this
-                }),
-                /*#__PURE__*/ _jsxRuntime.jsx("input", {
-                    type: "submit",
-                    value: "Log In",
-                    onClick: handleSignIn,
-                    __source: {
-                        fileName: "src/components/signup.js",
-                        lineNumber: 47
-                    },
-                    __self: this
-                }),
-                /*#__PURE__*/ _jsxRuntime.jsx("input", {
-                    type: "submit",
-                    value: "Sign Up",
-                    onClick: handleSignUp,
-                    __source: {
-                        fileName: "src/components/signup.js",
-                        lineNumber: 48
-                    },
-                    __self: this
-                })
-            ]
-        })
-    }));
-}
-_s(SignUp, "3B3pqDcVnkT+z/sPK6Z9zQsLP+s=");
-_c = SignUp;
-module.exports = SignUp;
-var _c;
-$RefreshReg$(_c, "SignUp");
-
-  $parcel$ReactRefreshHelpers$10a7.postlude(module);
-} finally {
-  window.$RefreshReg$ = prevRefreshReg;
-  window.$RefreshSig$ = prevRefreshSig;
-}
-},{"react/jsx-runtime":"8xIwr","react":"6TuXu","../utils/supabase":"1QIpV","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"5V79J"}],"1QIpV":[function(require,module,exports) {
+},{"react/jsx-runtime":"8xIwr","react":"6TuXu","../utils/supabase":"1QIpV","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"5V79J","./chat":"dfZxi","./signup":"4YqKZ"}],"1QIpV":[function(require,module,exports) {
 const { createClient  } = require("@supabase/supabase-js");
 const supabaseURL = "https://xiympjukvxbutfbagstz.supabase.co";
 const supabaseApiKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTYzMDA2MTc1MSwiZXhwIjoxOTQ1NjM3NzUxfQ.rYSPY8-KsXpuAYVpbvVS0NUuEBiGdJ-pLS1jCgnJZfM";
@@ -27884,7 +27775,7 @@ function Chat() {
     _s();
     const [messages, setMessages] = useState([]);
     const [content, setContent] = useState("");
-    let messageMarkup = messages.reverse().map(function(message) {
+    let messageMarkup = messages.map(function(message) {
         return(/*#__PURE__*/ _jsxRuntime.jsxs("div", {
             __source: {
                 fileName: "src/components/chat.js",
@@ -27914,20 +27805,20 @@ function Chat() {
             ]
         }));
     });
-    //   function getAllMessages() {
-    //   }
+    function getAllMessages() {
+        // Load all of the messages in the database
+        supabase.from("messages").select("*").order("id", {
+            ascending: false
+        }).then(function(data) {
+            setMessages(data.body);
+        });
+    }
     useEffect(function() {
         getAllMessages();
         setInterval(function() {
             getAllMessages();
-        });
-        // Load all of the messages in the database
-        supabase.from("messages").select("*").then(function(data) {
-            setMessages(data.body);
-        });
-    }, [
-        1000
-    ]);
+        }, 1000);
+    }, []);
     function handleSubmit(event) {
         event.preventDefault();
         // Save the message to the database
@@ -27944,7 +27835,7 @@ function Chat() {
     return(/*#__PURE__*/ _jsxRuntime.jsxs("div", {
         __source: {
             fileName: "src/components/chat.js",
-            lineNumber: 50
+            lineNumber: 48
         },
         __self: this,
         children: [
@@ -27952,7 +27843,7 @@ function Chat() {
                 onSubmit: handleSubmit,
                 __source: {
                     fileName: "src/components/chat.js",
-                    lineNumber: 51
+                    lineNumber: 49
                 },
                 __self: this,
                 children: [
@@ -27963,7 +27854,7 @@ function Chat() {
                         onChange: handleChange,
                         __source: {
                             fileName: "src/components/chat.js",
-                            lineNumber: 52
+                            lineNumber: 50
                         },
                         __self: this
                     }),
@@ -27972,7 +27863,7 @@ function Chat() {
                         value: "Send",
                         __source: {
                             fileName: "src/components/chat.js",
-                            lineNumber: 58
+                            lineNumber: 56
                         },
                         __self: this
                     })
@@ -27981,7 +27872,7 @@ function Chat() {
             /*#__PURE__*/ _jsxRuntime.jsx("h3", {
                 __source: {
                     fileName: "src/components/chat.js",
-                    lineNumber: 60
+                    lineNumber: 58
                 },
                 __self: this,
                 children: "All Messages!"
@@ -28001,6 +27892,115 @@ $RefreshReg$(_c, "Chat");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-runtime":"8xIwr","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"5V79J","react":"6TuXu","../utils/supabase":"1QIpV"}]},["2rAXy","8Ye98","6cF5V"], "6cF5V", "parcelRequire17a8")
+},{"react/jsx-runtime":"8xIwr","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"5V79J","react":"6TuXu","../utils/supabase":"1QIpV"}],"4YqKZ":[function(require,module,exports) {
+var $parcel$ReactRefreshHelpers$10a7 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var prevRefreshReg = window.$RefreshReg$;
+var prevRefreshSig = window.$RefreshSig$;
+$parcel$ReactRefreshHelpers$10a7.prelude(module);
+
+try {
+var _jsxRuntime = require("react/jsx-runtime");
+var _s = $RefreshSig$();
+const { useState  } = require("react");
+const supabase = require("../utils/supabase");
+function SignUp() {
+    _s();
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    function handleEmailChange(event) {
+        setEmail(event.target.value);
+    }
+    function handlePasswordChange(event) {
+        setPassword(event.target.value);
+    }
+    function handleSignIn(event) {
+        event.preventDefault();
+        supabase.auth.signIn({
+            email: email,
+            password: password
+        }).then(function(data) {
+        // console.log(data);
+        });
+    }
+    function handleSignUp(event) {
+        event.preventDefault();
+        supabase.auth.signUp({
+            email: email,
+            password: password
+        }).then(function(data) {
+            console.log(data);
+        });
+    }
+    return(/*#__PURE__*/ _jsxRuntime.jsx("div", {
+        __source: {
+            fileName: "src/components/signup.js",
+            lineNumber: 33
+        },
+        __self: this,
+        children: /*#__PURE__*/ _jsxRuntime.jsxs("form", {
+            __source: {
+                fileName: "src/components/signup.js",
+                lineNumber: 34
+            },
+            __self: this,
+            children: [
+                /*#__PURE__*/ _jsxRuntime.jsx("input", {
+                    type: "text",
+                    placeholder: "Email",
+                    value: email,
+                    onChange: handleEmailChange,
+                    __source: {
+                        fileName: "src/components/signup.js",
+                        lineNumber: 35
+                    },
+                    __self: this
+                }),
+                /*#__PURE__*/ _jsxRuntime.jsx("input", {
+                    type: "password",
+                    placeholder: "Password",
+                    value: password,
+                    onChange: handlePasswordChange,
+                    __source: {
+                        fileName: "src/components/signup.js",
+                        lineNumber: 41
+                    },
+                    __self: this
+                }),
+                /*#__PURE__*/ _jsxRuntime.jsx("input", {
+                    type: "submit",
+                    value: "Log In",
+                    onClick: handleSignIn,
+                    __source: {
+                        fileName: "src/components/signup.js",
+                        lineNumber: 47
+                    },
+                    __self: this
+                }),
+                /*#__PURE__*/ _jsxRuntime.jsx("input", {
+                    type: "submit",
+                    value: "Sign Up",
+                    onClick: handleSignUp,
+                    __source: {
+                        fileName: "src/components/signup.js",
+                        lineNumber: 48
+                    },
+                    __self: this
+                })
+            ]
+        })
+    }));
+}
+_s(SignUp, "3B3pqDcVnkT+z/sPK6Z9zQsLP+s=");
+_c = SignUp;
+module.exports = SignUp;
+var _c;
+$RefreshReg$(_c, "SignUp");
+
+  $parcel$ReactRefreshHelpers$10a7.postlude(module);
+} finally {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+},{"react/jsx-runtime":"8xIwr","react":"6TuXu","../utils/supabase":"1QIpV","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"5V79J"}]},["2rAXy","8Ye98","6cF5V"], "6cF5V", "parcelRequire17a8")
 
 //# sourceMappingURL=index.5cb7de60.js.map
